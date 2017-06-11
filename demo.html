@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Angular – Best Practices</title>
+
+		<meta name="description" content="Angular Best Practices from those build">
+		<meta name="author" content="Saurav Kumar">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/league.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h3>Angular Best Practices</h3>
+					<p>
+						<img data-src="quote-1.jpg" alt="Positivity">
+					</p>
+				</section>
+
+				<section>
+					<h2>Takeaway</h2>
+					<ul>
+            <li>Application Structure</li>
+						<li>Coding - Conventions</li>
+            <li>Development Workflow</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Application Structure</h2>
+						<p>Purpose</p>
+						<p>Approach</p>
+						<br>
+						<a href="#" class="navigate-down">
+							<img width="178" height="238" data-src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+						</a>
+					</section>
+					<section>
+						<h2>Folder Structure</h2>
+						<p>Consideration</p>
+            <ul>
+              <li>Application size</li>
+              <li>Reusability - DRY</li>
+              <li>Easy to
+                <ul>
+                  <li>Locate</li>
+                  <li>Identify</li>
+                </ul>
+              </li>
+            </ul>
+					</section>
+					<section>
+						<h2>Implementation</h2>
+						<ul>
+              <li>Keep hierarchy as flat as possible</li>
+              <li>Divide modules based on features/view</li>
+              <li>Leverage shared solely for utils. and "common" components/services/pipes</li>
+              <li><a href="#" class="navigate-down">
+							Example
+						</a></li>
+            </ul>
+					</section>
+          <section>
+						<a href="https://github.com/thekumar101/angular-demo-complete/tree/master/app" target="">
+							<img data-src="folder-structure.png" alt="Down arrow">
+						</a>
+					</section>
+				</section>
+
+				<section>
+					<section>
+            <h2>Coding - Conventions</h2>
+            <p>
+              Covers 
+              <ul>
+                <li>Coding - module coverage, component span, service employment</li>
+                <li>Naming conventions for everything associated with application</li>
+              </ul>
+            </p>
+          </section>
+          <section>
+						<h3>Single Responsibility Principle</h3>
+						<p>Ensures better readability, testable code</p>
+						<p><a href="https://github.com/thekumar101/angular-demo-complete/tree/master/app" target="_blank">Example</a></p>
+          </section>
+					<section>
+						<h3>Naming</h3>
+						<h4>Folder</h4>
+						<ul>
+							<li>Consistent</li>
+							<li>Purpose</li>
+							<li>Relation</li>
+						</ul>
+						<p>
+							<img data-src="folder-structure-2.png"></a>
+						</p>
+					</section>
+					<section>
+						<h3>Naming</h3>
+						<h4>Symbols</h4>
+						<ul>
+							<li>use dashes to separate words</li>
+							<li>use dots to separate description</li>
+							<li>feature.type.ts</li>
+							<li>.service, .component, .pipe, .module, .spec, and .directive</li>
+							<li><a href="#" class="navigate-down">
+							Example
+						</a></li>
+						</ul>
+					</section>
+					<section>
+						<ul>
+							<li>app.component.ts</li>
+							<li>products.module.ts</li>
+							<li>products-routing.module.ts</li>
+							<li>products.component.ts</li>
+							<li>product-list.component.ts</li>
+							<li>product-detail.component.ts</li>
+							<li>init-caps.pipe.ts</li>
+							<li>user-profile.service.ts</li>
+						</ul>							
+					</section>
+					<section>
+						<h3>Coding Conventions</h3>
+						<ul>
+							<li>Naming classes, interfaces: Upper Camel Case</li>
+							<li>Properties and methods: lower Camel Case</li>
+							<li>Imports: Separate third party imports and application imports by leaving a blank line. Order imports alphabetized by module</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Services</h3>
+						<ul>
+							<li>Services whose instance is expected to be shared should be in CoreModule. E.g. ExceptionService, LoggerService.</li>
+							<li>Use service for complex/reusable logic. Hence, limit component logic to only that required for the view.</li>
+						</ul>
+						<pre>
+							<code class="hljs" data-trim contenteditable>
+								export class ProductService {
+									constructor(private http: Http) { }
+									getProducts() {
+										return this.http.get('api/products')
+											.map((response: Response) => <Hero[]>response.json().data);
+									}
+								}
+							</code>
+						</pre>
+					</section>
+					<section>
+						<h3>Lifecycle Hooks</h3>
+						<p>Always use lifecycle hooks to define actions for important events</p>
+						<pre>
+							<code class="h1js" data-trim contenteditable>
+								@Component({
+									selector: 'buy-item-button',
+									template: `<button>Buy</button>`
+								})
+								export class BuyItemComponent implements OnInit {
+									ngOnInit() {
+										console.log('The component is initialized');
+									}
+								}
+							</code>
+						</pre>
+					</section>
+				</section>
+
+				<section>
+					<h2>Pretty Code</h2>
+					<pre><code class="hljs" data-trim contenteditable>
+function linkify( selector ) {
+  if( supports3DTransforms ) {
+
+    var nodes = document.querySelectorAll( selector );
+
+    for( var i = 0, len = nodes.length; i &lt; len; i++ ) {
+      var node = nodes[i];
+
+      if( !node.className ) {
+        node.className += ' roll';
+      }
+    }
+  }
+}
+					</code></pre>
+					<p>Code syntax highlighting courtesy of <a href="http://softwaremaniacs.org/soft/highlight/en/description/">highlight.js</a>.</p>
+				</section>
+
+				<section>
+					<h2>Take a Moment</h2>
+					<p>
+						Press B or . on your keyboard to pause the presentation. This is helpful when you're on stage and want to take distracting slides off the screen.
+					</p>
+				</section>
+
+				<section>
+					<h2>Much more</h2>
+					<ul>
+						<li>Right-to-left support</li>
+						<li><a href="https://github.com/hakimel/reveal.js#api">Extensive JavaScript API</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js#auto-sliding">Auto-progression</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js#parallax-background">Parallax backgrounds</a></li>
+						<li><a href="https://github.com/hakimel/reveal.js#keyboard-bindings">Custom keyboard bindings</a></li>
+					</ul>
+				</section>
+
+				<section style="text-align: left;">
+					<h1>THE END</h1>
+					<p>
+						- <a href="http://slides.com">Try the online editor</a> <br>
+						- <a href="https://github.com/hakimel/reveal.js">Source code &amp; documentation</a>
+					</p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
